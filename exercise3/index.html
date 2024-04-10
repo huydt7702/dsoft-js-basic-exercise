@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 3</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <h1 class="heading">Big Number Calculator</h1>
+      <p class="description">
+        The calculator below can compute very large numbers. Acceptable formats include: integers, decimal, or the
+        E-notation form of scientific notation, i.e. 23E18, 3.5e19, etc.
+      </p>
+      <div class="result-wapper">
+        <h3 class="result-title">Result</h3>
+        <p class="result">0</p>
+      </div>
+
+      <form class="calculator-form">
+        <div class="form-group">
+          <span>X = </span>
+          <textarea class="input-x" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <span>Y = </span>
+          <textarea class="input-y" rows="3"></textarea>
+        </div>
+        <div class="calculate-block">
+          <p>Click the buttons below to calculate</p>
+          <div class="group-btn">
+            <button class="add-button">X + Y</button>
+            <button class="subtract-button">X - Y</button>
+            <button class="multiply-button">X × Y</button>
+            <button class="divide-button">X / Y</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
