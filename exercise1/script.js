@@ -1,3 +1,16 @@
+function throttle(mainFunction, delay) {
+  let timerFlag = null;
+
+  return (...args) => {
+    if (timerFlag === null) {
+      mainFunction(...args);
+      timerFlag = setTimeout(() => {
+        timerFlag = null;
+      }, delay);
+    }
+  };
+}
+
 let dataArray = [];
 
 for (let i = 0; i < 2000; i++) {
@@ -49,8 +62,7 @@ const tableHead = `
     </tr>
 `;
 
-function handleSearchItemByNameOrSource(event) {
-  event.preventDefault();
+function handleSearchItemByNameOrSource() {
   const searchValue = input.value.toLowerCase().trim();
   const result = improveSearchItemByNameOrSource(searchValue);
 
@@ -72,4 +84,10 @@ function handleSearchItemByNameOrSource(event) {
   }
 }
 
-form.addEventListener('submit', handleSearchItemByNameOrSource);
+// Use throttle to limits how often a function can be called in a given period of time
+const throttledSearch = throttle(handleSearchItemByNameOrSource, 500);
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  throttledSearch();
+});
