@@ -38,10 +38,16 @@ function addLargeNumbers(num1, num2) {
 function subtractLargeNumbers(num1, num2) {
   let borrow = 0;
   let result = '';
-  let maxLength = Math.max(num1.length, num2.length);
 
-  for (let i = 0; i < maxLength; i++) {
-    const digit1 = i < num1.length ? parseInt(num1[num1.length - 1 - i]) : 0;
+  // Determine which number is larger
+  let isNegative = false;
+  if (num1.length < num2.length || (num1.length === num2.length && num1 < num2)) {
+    [num1, num2] = [num2, num1]; // Swap num1 and num2
+    isNegative = true;
+  }
+
+  for (let i = 0; i < num1.length; i++) {
+    const digit1 = parseInt(num1[num1.length - 1 - i]);
     const digit2 = i < num2.length ? parseInt(num2[num2.length - 1 - i]) : 0;
 
     let diff = digit1 - digit2 - borrow;
@@ -58,6 +64,12 @@ function subtractLargeNumbers(num1, num2) {
 
   // Remove leading zeros
   result = result.replace(/^0+/, '');
+
+  // Add negative sign if needed
+  if (isNegative) {
+    result = '-' + result;
+  }
+
   return result;
 }
 
@@ -89,6 +101,7 @@ function multiplyLargeNumbers(num1, num2) {
 
 function divideLargeNumbers(dividend, divisor) {
   if (parseInt(divisor) === 0) {
+    resultDiv.innerText = 'Division by zero';
     throw new Error('Division by zero');
   }
 
@@ -134,12 +147,12 @@ function calculate(x, y, operation) {
 
 function handleCalculate(operation, e) {
   e.preventDefault();
-  const inputXValue = inputX.value;
-  const inputYValue = inputY.value;
+  const inputXValue = inputX.value.trim();
+  const inputYValue = inputY.value.trim();
 
   if (isNaN(inputXValue) || isNaN(inputYValue)) {
     resultDiv.innerText = 'Invalid calculation!!!';
-    return;
+    throw new Error('Invalid calculation!!!');
   }
 
   const result = calculate(inputXValue, inputYValue, operation);
